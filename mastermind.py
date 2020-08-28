@@ -1,18 +1,14 @@
 import random
-
-
-# TODO: Decompose into functions
-def run_game():
+def generate_code():
     code = [0,0,0,0]
     for i in range(4):
         value = random.randint(1, 8) # 8 possible digits
         while value in code:
             value = random.randint(1, 8)  # 8 possible digits
         code[i] = value
+    return code
 
-    #print(code)
-    print('4-digit Code has been set. Digits in range 1 to 8. You have 12 turns to break it.')
-
+def game_logic(code):
     correct = False
     turns = 0
     while not correct and turns < 12:
@@ -28,6 +24,7 @@ def run_game():
             elif int(answer[i]) in code:
                 correct_digits_only += 1
 
+
         print('Number of correct digits in correct place:     '+str(correct_digits_and_position))
         print('Number of correct digits not in correct place: '+str(correct_digits_only))
         turns += 1
@@ -35,11 +32,28 @@ def run_game():
         if correct_digits_and_position == 4:
             correct = True
             print('Congratulations! You are a codebreaker!')
+            
         else:
             print('Turns left: '+str(12 - turns))
 
-    print('The code was: '+str(code))
+    print('The code was: '+str(code))        
 
+
+    return correct_digits_and_position, correct_digits_only
+
+
+# TODO: Decompose into functions
+def run_game():
+    code = generate_code()
+    print('4-digit Code has been set. Digits in range 1 to 8. You have 12 turns to break it.')
+    
+    correct_place, wrong_place = game_logic(code)
+    
+    
+
+       
 
 if __name__ == "__main__":
+    
+
     run_game()
